@@ -31,14 +31,14 @@ const TrackList = ({allTracks}) => {
 
 
 
-
-
 useEffect(() => {
     if (added) setAdded(false);
 }, [added, options])
 
 
     const syncAll = (e) => {
+
+        // NON FUNCTIONAL
         e.preventDefault();
 
         const longestTrackId = findLongestTrack();
@@ -143,7 +143,7 @@ useEffect(() => {
                 ?<button className="btn btn-outline-info rounded-pill me-2" onClick={playAll}><i className="fas fa-play me-2"></i>Play all</button>
                 : <button className="btn btn-outline-danger rounded-pill me-2" onClick={stopAll}><i className="fas fa-stop me-2"></i>Stop all</button>
                 }
-                <button className="btn btn-outline-primary rounded-pill" onClick={syncAll}><i className="fas fa-sync me-2"></i>Sync</button>
+                <button disabled className="btn btn-outline-primary rounded-pill" onClick={syncAll}><i className="fas fa-sync me-2"></i>Sync</button>
             </div>
             <div>
                {options.length > 0 && 
@@ -163,6 +163,7 @@ useEffect(() => {
                     Select Track
             </div>
             {Object.values(tracks).map(track => {
+                console.log(track.player.current.duration)
                 if (track.status === 'active') {
 
                     return (
@@ -175,7 +176,7 @@ useEffect(() => {
                             onVolChange={changeVolume}
                             caclBpm={bpm}
                             playingAll={playingAll}
-                            currentProgress={track.player.current.currentTime}
+                            duration={track.player.current.duration}
                         />
 
                 )

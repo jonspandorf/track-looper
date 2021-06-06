@@ -8,16 +8,31 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 
   
-const TrackItem = ({ track, onRemoveTrack, onPlay, onPause, onVolChange, calcBpm, playingAll }) => {
-
-
+const TrackItem = ({ track, onRemoveTrack, onPlay, onPause, onVolChange, calcBpm, playingAll, duration }) => {
 
     const { owner, bpm } = track
 
     const [value, setValue] = useState(30);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [calculateNow, setCalculateNow] = useState(false)
+    const [checking, setChecking] = useState(true)
     const quarter = 60 / bpm
-    const barsCalculation = Math.floor(Math.floor(track.player.current.duration) * (quarter));
+
+    useEffect(() => {
+        if(!Number.isNaN(duration)) { 
+            setCalculateNow(true)
+            setChecking(false)
+        }
+        else {
+            setChecking(true)
+        }
+    }, [checking])
+
+    const calculateBars = () => {
+        return Math.floor(duration) * quarter;
+    }
+
+    console.log(duration)
 
     useEffect(() => {
         if(track.readyToPlay && playingAll) {
@@ -70,7 +85,7 @@ const TrackItem = ({ track, onRemoveTrack, onPlay, onPause, onVolChange, calcBpm
                 <div className="d-flex justify-content-end me-2" style={{cursor: 'pointer'}} onClick={handleRemove}>
                     <i className="fas fa-trash me-2"></i>
                     <div>
-                        Bars: {barsCalculation}
+                        Bars:{ calculateNow ?  Math.floor(calculateBars) : 'loading'} 
                     </div>
                 </div>
 
