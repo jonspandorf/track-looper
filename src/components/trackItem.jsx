@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
@@ -8,61 +9,69 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 
   
-const TrackItem = ({ track, onRemoveTrack, onPlay, onPause, onVolChange, calcBpm, playingAll, duration }) => {
+const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations, onAddToCached,  }) => {
 
     const { owner, bpm } = track
 
     const [value, setValue] = useState(30);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [calculateNow, setCalculateNow] = useState(false)
-    const [checking, setChecking] = useState(true)
+    const [duration, setDuration] =useState(0);
+    const [color] = useState('')
     const quarter = 60 / bpm
 
     useEffect(() => {
-        if(!Number.isNaN(duration)) { 
-            setCalculateNow(true)
-            setChecking(false)
+        if (cachedDurations.length === 0) {
+            track.player.onloadedmetadata = function () {
+                setDuration(track.player.duration) 
+            }
+        } else {
+            cachedDurations.forEach(item => {
+                console.log(item)
+                if (track.Id === item.id) {
+                    setDuration(item.duration)
+                }
+            })
         }
-        else {
-            setChecking(true)
-        }
-    }, [checking])
+        
+    }, [track])
+
+
 
     const calculateBars = () => {
         return Math.floor(duration) * quarter;
     }
 
-    console.log(duration)
 
     useEffect(() => {
         if(track.readyToPlay && playingAll) {
-            onPlay(track.Id);
+            track.player.play();
         } else {
-            onPause(track.Id)
+            track.player.pause();
         }
         
     }, [playingAll])
 
     const handleVolChange = (e, val) => {
         setValue(val);
-        onVolChange(track.Id, val)
+        track.player.volume = val * 0.01;
     }
 
     const handleSinglePlay = (e) => {
         e.preventDefault();
         setIsPlaying(true)
-        onPlay(track.Id)
+        track.player.play();
         }
     
 
     const handlePause = (e) => {
         e.preventDefault();
         setIsPlaying(false)
-        onPause(track.Id)
+        track.player.pause()
 
     }
     const handleRemove = (e) => {
         e.preventDefault();
+        onAddToCached(track.Id, duration)
         onRemoveTrack(track.Id)
     }
 
@@ -75,17 +84,17 @@ const TrackItem = ({ track, onRemoveTrack, onPlay, onPause, onVolChange, calcBpm
                 <button className="btn btn-outline-dark rounded-circle d-flex" onClick={handleSinglePlay}><PlayArrowIcon /></button>
                 : <button className="btn btn-outline-warning rounded-circle" onClick={handlePause}><PauseIcon /></button>}
             </div>
-            <div>
+            <div className="ms-4 me-4">
                 <div>{owner}</div>
                 <div>Find Inst</div>
                 <small className="text-muted">BPM: {bpm}</small>
                 {calcBpm && <small className="text-muted">Cacl BPM: {calcBpm}</small>}
             </div>
             <div className="w-25">
-                <div className="d-flex justify-content-end me-2" style={{cursor: 'pointer'}} onClick={handleRemove}>
-                    <i className="fas fa-trash me-2"></i>
-                    <div>
-                        Bars:{ calculateNow ?  Math.floor(calculateBars) : 'loading'} 
+                <div className="d-flex justify-content-end align-items-center me-1">
+                    <button className="btn" onClick={handleRemove}><i className="fas fa-trash me-1"></i></button>
+                    <div className="d-flex">
+                        Bars: {duration ? <div className="ms-1 text-muted">{Math.floor(calculateBars())}</div> : <div className="spinner-border spinner-border-sm text-primary" role="status"><span className="visually-hidden">Loading...</span></div>} 
                     </div>
                 </div>
 

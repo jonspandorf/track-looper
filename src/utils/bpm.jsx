@@ -23,7 +23,7 @@ import RealTimeBPMAnalyzer from 'realtime-bpm-analyzer';
             }
         });
 
-        scriptProcessorNode = (e) => {
+        scriptProcessorNode.onaudioprocess = (e) => {
             onAudioProcess.analyze(e);
         };
 

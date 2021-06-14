@@ -1,4 +1,4 @@
-import TrackList from './components/trackList';
+import Main from './components/Main';
 
 const mockTracks = [{
   "Id":1,
@@ -23,14 +23,14 @@ const mockTracks = [{
   }]
   
 
-function App() {
+  function App() {
 
 
-  return (
-    <div className="container">
-      <TrackList allTracks={mockTracks} />
-    </div>
-  );
-}
-
+    return (
+      <div className="container">
+        <Main allTracks={mockTracks} />
+      </div>
+    );
+  }
+  
 export default App;
