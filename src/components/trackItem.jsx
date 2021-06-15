@@ -25,7 +25,6 @@ const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations,
             }
         } else {
             cachedDurations.forEach(item => {
-                console.log(item)
                 if (track.Id === item.id) {
                     setDuration(item.duration)
                 }
