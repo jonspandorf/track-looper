@@ -9,14 +9,13 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 
   
-const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations, onAddToCached,  }) => {
+const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations, onAddToCached  }) => {
 
     const { owner, bpm } = track
 
     const [value, setValue] = useState(30);
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] =useState(0);
-    const [color] = useState('')
     const quarter = 60 / bpm
 
     useEffect(() => {
@@ -33,7 +32,7 @@ const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations,
             })
         }
         
-    }, [track])
+    }, [track, cachedDurations])
 
 
 
@@ -49,7 +48,7 @@ const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations,
             track.player.pause();
         }
         
-    }, [playingAll])
+    }, [track, playingAll])
 
     const handleVolChange = (e, val) => {
         setValue(val);
@@ -100,7 +99,7 @@ const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations,
                     </div>
                 </div>
 
-                <div className="d-flex">
+                <div className="d-flex justify-content-center row-sm-12">
                     <Grid item>
                         <VolumeDown />
                     </Grid>

@@ -34,7 +34,6 @@ const TrackList = ({currentTracks, onRemoveTrack, bpm, isPlayingAll}) => {
     return(
         <>
         {currentTracks && Object.values(currentTracks).map(track => {
-            if (track.status === 'active') {
                 return (
                     <TrackItem 
                         key={track.Id} 
@@ -47,7 +46,6 @@ const TrackList = ({currentTracks, onRemoveTrack, bpm, isPlayingAll}) => {
                     />
 
             )
-            }
         })}
         </>
     )

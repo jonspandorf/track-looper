@@ -1,6 +1,5 @@
   
 import { useEffect, useState } from "react"
-import TrackItem from "./trackItem"
 import TrackList from './trackList'
 import calculateBPM from "../utils/bpm";
 import { getTracks } from "../utils/lib";
@@ -34,7 +33,7 @@ useEffect(() => {
         e.preventDefault();
 
         const longestTrackId = findLongestTrack();
-        const bpm = calculateBPM(tracks[longestTrackId].player.current);
+        const bpm = calculateBPM(tracks[longestTrackId].player);
         setBpm(bpm)
         
         Object.values(tracks).sort((a, b) => {
@@ -51,8 +50,6 @@ useEffect(() => {
         let longest = 0;
 
         Object.values(tracks).forEach(track => {
-            console.log(track.player.duration)
-
             if (track.player.duration > longest) {
                 longest = track.Id;
             } 
@@ -64,7 +61,6 @@ useEffect(() => {
 
     const addTrack = (value) => {
         
-
         Object.values(tracks).forEach(track => {
             if (track.Id === value && track.status === 'deleted') {
                 track.status = 'active'; 
@@ -74,7 +70,7 @@ useEffect(() => {
         })
 
         setAdded(true)
-        
+
     }
 
     const removeOption = (id) => {
