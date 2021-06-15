@@ -1,4 +1,7 @@
-# Make Sure to install all depedencies before running the app
+# Link to deployed App
+https://looper-musico.web.app/
+
+Make Sure to install all depedencies before running the app
 
 # Getting Started with Create React App
 
