@@ -125,7 +125,7 @@ useEffect(() => {
 
     return(
 
-        <div className="w-50">
+        <div className="col-lg-6 col-md-12">
             <div className="d-flex align-items-center justify-content-between">
                 <Controller options={options} isPlayingAll={playingAll} onPlayAll={playAll} onStopAll={stopAll} onSyncAll={syncAll} />
                 {options.length > 0 && <SelectMenu options={options} addTrack={addTrack} isPlayingAll={playingAll}/>}

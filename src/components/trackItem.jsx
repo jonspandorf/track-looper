@@ -79,16 +79,18 @@ const TrackItem = ({ track, onRemoveTrack, calcBpm, playingAll, cachedDurations,
         <>
         <li className="list-group-item">
             <div className="d-flex border-bottom border-dark justify-content-between">
-            <div>
+            <div className="d-flex align-items-center">
                 {!isPlaying ? 
                 <button className="btn btn-outline-dark rounded-circle d-flex" onClick={handleSinglePlay}><PlayArrowIcon /></button>
                 : <button className="btn btn-outline-warning rounded-circle" onClick={handlePause}><PauseIcon /></button>}
             </div>
-            <div className="ms-4 me-4">
-                <div>{owner}</div>
-                <div>Find Inst</div>
-                <small className="text-muted">BPM: {bpm}</small>
-                {calcBpm && <small className="text-muted">Cacl BPM: {calcBpm}</small>}
+            <div className="w-100 d-flex justify-content-center ms-4 me-4">
+                <div className=" w-50 d-flex flex-column align-items-center">
+                    <div>{owner}</div>
+                    <div>Find Inst</div>
+                    <small className="text-muted">BPM: {bpm}</small>
+                    {calcBpm && <small className="text-muted">Cacl BPM: {calcBpm}</small>}
+                </div>
             </div>
             <div className="w-25">
                 <div className="d-flex justify-content-end align-items-center me-1">
