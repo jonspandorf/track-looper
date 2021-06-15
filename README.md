@@ -1,6 +1,7 @@
 # Link to deployed App
 https://looper-musico.web.app/
 
+# After Clone
 Make Sure to install all depedencies before running the app
 
 # Getting Started with Create React App
