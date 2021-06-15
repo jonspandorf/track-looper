@@ -127,7 +127,7 @@ useEffect(() => {
 
         <div className="w-50">
             <div className="d-flex align-items-center justify-content-between">
-                <Controller isPlayingAll={playingAll} onPlayAll={playAll} onStopAll={stopAll} onSyncAll={syncAll} />
+                <Controller options={options} isPlayingAll={playingAll} onPlayAll={playAll} onStopAll={stopAll} onSyncAll={syncAll} />
                 {options.length > 0 && <SelectMenu options={options} addTrack={addTrack} isPlayingAll={playingAll}/>}
             </div>
             <TrackList currentTracks={currentTracks} onRemoveTrack={removeTrack} bpm={bpm} isPlayingAll={playingAll} />
